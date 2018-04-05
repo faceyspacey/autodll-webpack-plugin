@@ -1,10 +1,10 @@
 {
-  "name": "autodll-webpack-plugin",
+  "name": "autodll-webpack-plugin-webpack-4",
   "author": "Asaf Katz",
   "license": "MIT",
-  "version": "0.3.8",
+  "version": "1.0.0",
   "description": "Webpack's DllPlugin without the boilerplate",
-  "repository": "https://github.com/asfktz/autodll-webpack-plugin",
+  "repository": "https://github.com/faceyspacey/autodll-webpack-plugin-webpack-4",
   "main": "lib/index.js",
   "scripts": {
     "install:fixturedeps": "node ./scripts/installFixtureDeps.js",
