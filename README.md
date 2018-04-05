@@ -7,8 +7,8 @@
 # AutoDllPlugin
 Webpack's DllPlugin without the boilerplate
 
-`npm install --save-dev autodll-webpack-plugin`
-
+`npm install --save-dev autodll-webpack-plugin-webpack-4`
+> NOTE: this is a temporary fork of `autodll-webpack-plugin` to work with webpack 4. `html-webpack-plugin` works with this fork.
 ---
 
 ## Table of contents
