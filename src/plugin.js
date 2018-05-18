@@ -5,6 +5,7 @@ import { SyncHook } from 'tapable';
 import { RawSource } from 'webpack-sources';
 
 import path from 'path';
+import fs from 'fs';
 
 import { cacheDir, getManifestPath, getInjectPath } from './paths';
 import createCompileIfNeeded from './createCompileIfNeeded';
@@ -60,14 +61,19 @@ class AutoDLLPlugin {
 
     const { context, inject } = settings;
 
-    Object.keys(dllConfig.entry)
-      .map(getManifestPath(settings.hash))
-      .forEach(manifestPath => {
-        new DllReferencePlugin({
-          context: context,
-          manifest: manifestPath,
-        }).apply(compiler);
-      });
+    const registerDllReference = () => {
+      Object.keys(dllConfig.entry)
+        .map(getManifestPath(settings.hash))
+        .forEach(manifestPath => {
+          fs.exists(manifestPath, () => {
+            new DllReferencePlugin({
+              context: context,
+              manifest: manifestPath,
+            }).apply(compiler);
+          })
+        });
+    };
+    registerDllReference();
 
     const beforeCompile = (params, callback) => {
       const dependencies = new Set(params.compilationDependencies);
@@ -78,6 +84,7 @@ class AutoDLLPlugin {
     const watchRun = (compiler, callback) => {
       compileIfNeeded(() => webpack(dllConfig))
         .then(a => {
+          registerDllReference();
           return a;
         })
         .then(handleStats)
